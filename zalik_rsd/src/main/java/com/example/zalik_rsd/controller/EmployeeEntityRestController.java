@@ -1,11 +1,9 @@
 package com.example.zalik_rsd.controller;
 
-import com.example.zalik_rsd.modal.FarmEntity;
-import com.example.zalik_rsd.repository.FarmRepository;
+import com.example.zalik_rsd.modal.EmployeeAccess;
+import com.example.zalik_rsd.repository.EmployeeAccessRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,17 +23,20 @@ import java.util.Set;
 public class FarmEntityRestController {
 
     @Autowired
-    private FarmRepository farmRepository;
+    private EmployeeAccess employeeAccess;
 
     @Autowired
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    @Autowired
+    private EmployeeAccessRepository employeeAccessRepository;
 
-    @GetMapping("/getAllFarmEntity")
+
+    @GetMapping("/getAllEmployeeEntity")
     public ResponseEntity<String> getAllFarmEntity() {
         try {
 
-            List<FarmEntity> farmEntities = farmRepository.findAll();
+            List<EmployeeAccess> farmEntities = employeeAccessRepository.findAll();
             String json = objectMapper.writeValueAsString(farmEntities);
 
             return ResponseEntity.ok()
@@ -49,7 +50,7 @@ public class FarmEntityRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getFarmEntityById(@PathVariable("id") int id) {
+    public ResponseEntity<String> getEmployeeEntityById(@PathVariable("id") int id) {
         try {
             id--;
             if (id<0){
@@ -57,14 +58,14 @@ public class FarmEntityRestController {
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(objectMapper.writeValueAsString("Min id-1"));
             }
-            List<FarmEntity> farmEntities = farmRepository.findAll();
+            List<EmployeeAccess> farmEntities = employeeAccessRepository.findAll();
             if (id>farmEntities.size()){
                 return ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(objectMapper.writeValueAsString("Max id-"+farmEntities.size()+1));
             }
-            FarmEntity farmEntityID = farmEntities.get(id);
-            String json = objectMapper.writeValueAsString(farmEntityID);
+            EmployeeAccess employeeAccess1 = farmEntities.get(id);
+            String json = objectMapper.writeValueAsString(employeeAccess1);
 
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
@@ -78,7 +79,7 @@ public class FarmEntityRestController {
 
 
     @PutMapping("/addFarmEntity")
-    public ResponseEntity<String> createFarmEntity(@Valid @RequestBody FarmEntity farm, BindingResult bindingResult) {
+    public ResponseEntity<String> createFarmEntity(@Valid @RequestBody EmployeeAccess farm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getFieldError().getDefaultMessage();
             return ResponseEntity.badRequest().body(errorMessage);
