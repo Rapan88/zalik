@@ -4,26 +4,22 @@ import com.example.zalik_rsd.modal.EmployeeAccess;
 import com.example.zalik_rsd.repository.EmployeeAccessRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RequestMapping("/api")
 @CrossOrigin(origins = "*",
         allowedHeaders = "*")
 @RestController
-public class FarmEntityRestController {
-
-    @Autowired
-    private EmployeeAccess employeeAccess;
+public class EmployeeEntityRestController {
 
     @Autowired
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -33,7 +29,7 @@ public class FarmEntityRestController {
 
 
     @GetMapping("/getAllEmployeeEntity")
-    public ResponseEntity<String> getAllFarmEntity() {
+    public ResponseEntity<String> getAllEmployeeEntity() {
         try {
 
             List<EmployeeAccess> farmEntities = employeeAccessRepository.findAll();
@@ -78,18 +74,18 @@ public class FarmEntityRestController {
     }
 
 
-    @PutMapping("/addFarmEntity")
-    public ResponseEntity<String> createFarmEntity(@Valid @RequestBody EmployeeAccess farm, BindingResult bindingResult) {
+    @PutMapping("/addEmployeeEntity")
+    public ResponseEntity<String> createEmployeeEntity(@Valid @RequestBody EmployeeAccess employeeAccess, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getFieldError().getDefaultMessage();
             return ResponseEntity.badRequest().body(errorMessage);
         }
 
-        farmRepository.save(farm);
+        employeeAccessRepository.save(employeeAccess);
 
         String responseJson = null;
         try {
-            responseJson = objectMapper.writeValueAsString(farm);
+            responseJson = objectMapper.writeValueAsString(employeeAccess);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -99,12 +95,12 @@ public class FarmEntityRestController {
                 .body(responseJson);
     }
 
-    @DeleteMapping("/removeFarmEntity/{id}")
+    @DeleteMapping("/removeEmployeeEntity/{id}")
     public ResponseEntity<String> deleteEntityById(@PathVariable("id") Long id) {
-        Optional<FarmEntity> entityOptional = farmRepository.findById(id);
+        Optional<EmployeeAccess> entityOptional = employeeAccessRepository.findById(id);
 
         if (entityOptional.isPresent()) {
-            farmRepository.deleteById(id);
+            employeeAccessRepository.deleteById(id);
             return ResponseEntity.ok("Farm entity with ID " + id + " deleted successfully.");
         } else {
             return ResponseEntity.notFound().build();

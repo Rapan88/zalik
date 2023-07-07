@@ -43,7 +43,7 @@
             <version>3.1.1</version>
         </dependency>
 
-<!--        thymeleaf-->
+        <!--        thymeleaf-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -56,7 +56,7 @@
             <version>3.0.4.RELEASE</version>
         </dependency>
 
-<!--        PDF-->
+        <!--        PDF-->
 
         <dependency>
             <groupId>com.itextpdf</groupId>

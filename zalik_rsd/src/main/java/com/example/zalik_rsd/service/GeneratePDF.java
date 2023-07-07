@@ -1,7 +1,6 @@
 package com.example.zalik_rsd.service;
 
-import com.example.zalik_rsd.modal.FarmEntity;
-import com.example.zalik_rsd.repository.FarmRepository;
+import com.example.zalik_rsd.modal.EmployeeAccess;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -9,7 +8,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -18,17 +16,18 @@ import java.util.List;
 
 public class GeneratePDF {
 
-    public GeneratePDF(){
+    public GeneratePDF() {
 
     }
+
     private static final int BUFFER_SIZE = 4096;
 
     private String filePathPDF = "PDFFile.pdf";
 
 
-    public void doDownload(HttpServletRequest request, HttpServletResponse response,java.util.List<FarmEntity> allFarmEntity) throws IOException, FileNotFoundException {
+    public void doDownload(HttpServletRequest request, HttpServletResponse response, java.util.List<EmployeeAccess> allEmployee) throws IOException, FileNotFoundException {
 
-        createPDFFile(filePathPDF,allFarmEntity);
+        createPDFFile(filePathPDF, allEmployee);
 
         ServletContext context = request.getServletContext();
         String appPath = context.getRealPath("");    // construct the complete absolute path of the file
@@ -56,14 +55,13 @@ public class GeneratePDF {
     }
 
 
-
-    private void createPDFFile(String filePath,List<FarmEntity> allFarmEntity) throws IOException {
+    private void createPDFFile(String filePath, List<EmployeeAccess> allEmployee) throws IOException {
         Document doc = new Document();
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(filePath));
             doc.open();
 
-            String text = "Pysanka Kyrylo   " + LocalDate.now()+" \n\n";
+            String text = "Pryshchepa Anton   " + LocalDate.now() + " \n\n";
 
             Paragraph paragraph = new Paragraph(text);
             paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
@@ -71,20 +69,20 @@ public class GeneratePDF {
             doc.add(paragraph);
 
             PdfPTable table = new PdfPTable(4);
-            PdfPCell cell2 = new PdfPCell(new Phrase("Enterprise name"));
-            PdfPCell cell1 = new PdfPCell(new Phrase("Cadastre number"));
-            PdfPCell cell3 = new PdfPCell(new Phrase("Annual in come"));
-            PdfPCell cell4 = new PdfPCell(new Phrase("Land area"));
+            PdfPCell cell2 = new PdfPCell(new Phrase("Name"));
+            PdfPCell cell1 = new PdfPCell(new Phrase("Entry time"));
+            PdfPCell cell3 = new PdfPCell(new Phrase("Exit time"));
+            PdfPCell cell4 = new PdfPCell(new Phrase("Room Number"));
 
             table.addCell(cell1);
             table.addCell(cell2);
             table.addCell(cell3);
             table.addCell(cell4);
-            for (FarmEntity farmEntity : allFarmEntity) {
-                PdfPCell enterpriseName = new PdfPCell(new Phrase(farmEntity.getEnterpriseName()));
-                PdfPCell cadastreNumber = new PdfPCell(new Phrase((farmEntity.getcadastreNumber())));
-                PdfPCell annualIncome = new PdfPCell(new Phrase(farmEntity.getAnnualIncome() + " "));
-                PdfPCell landArea = new PdfPCell(new Phrase(farmEntity.getLandArea() + " "));
+            for (EmployeeAccess employeeAccess : allEmployee) {
+                PdfPCell enterpriseName = new PdfPCell(new Phrase(employeeAccess.getName()));
+                PdfPCell cadastreNumber = new PdfPCell(new Phrase(String.valueOf((employeeAccess.getEntryTime()))));
+                PdfPCell annualIncome = new PdfPCell(new Phrase(employeeAccess.getExitTime() + " "));
+                PdfPCell landArea = new PdfPCell(new Phrase(employeeAccess.getRoomNumber() + " "));
 
 
                 table.addCell(enterpriseName);

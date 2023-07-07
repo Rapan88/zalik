@@ -2,29 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Додати підприємство</title>
+    <title>Додати працівника</title>
 </head>
 <body>
-<h1>Додати підприємство</h1>
+<h1>Додати працівника</h1>
 <div th:if="${errorMessage}" style="color: red">
     <p th:text="${errorMessage}"></p>
 </div>
 <form action="/add" method="post">
     <div>
-        <label for="cadastreNumber">Кадастровий номер:</label>
-        <input type="text" id="cadastreNumber" name="cadastreNumber" required>
+        <label for="name">Імʼя: </label>
+        <input type="text" id="name" name="name" required>
     </div>
     <div>
-        <label for="enterpriseName">Назва підприємства:</label>
-        <input type="text" id="enterpriseName" name="enterpriseName" required>
+        <label for="entryTime">Час входження</label>
+        <input type="text" id="entryTime" name="entryTime" required>
     </div>
     <div>
-        <label for="annualIncome">Річний дохід:</label>
-        <input type="number" id="annualIncome" name="annualIncome" required min="0">
+        <label for="exitTime">Час виходу:</label>
+        <input type="text" id="exitTime" name="exitTime" required min="0">
     </div>
     <div>
-        <label for="landArea">Площа землі:</label>
-        <input type="number" id="landArea" name="landArea" required min="0">
+        <label for="roomNumber">Номер приміщення:</label>
+        <input type="number" id="roomNumber" name="roomNumber" required min="0">
     </div>
     <button type="submit">Додати</button>
 </form>

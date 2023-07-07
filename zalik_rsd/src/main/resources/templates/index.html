@@ -2,33 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Список підприємств</title>
+    <title>Список працівникіів</title>
 </head>
 <body>
-<h1>Список підприємств</h1>
+<h1>Список працівників</h1>
 <form action="/filter" method="post">
-    <label for="companyNameFilter">Фільтр по назві підприємства:</label>
-    <input type="text" id="companyNameFilter" name="companyNameFilter">
+    <label for="roomNumber">Фільтр по номеру приміщення:</label>
+    <input type="text" id="roomNumber" name="roomNumber">
     <button type="submit">Фільтрувати</button>
 </form>
 <table>
     <tr>
-        <th>Кадастровий номер</th>
-        <th>Назва підприємства</th>
-        <th>Річний дохід</th>
-        <th>Площа землі</th>
+        <th>Імʼя</th>
+        <th>Час заходження</th>
+        <th>Час виходу</th>
+        <th>Номер приміщення</th>
     </tr>
-    <tr th:each="farm : ${farms}">
-        <td th:text="${farm.getcadastreNumber()}"></td>
-        <td th:text="${farm.getEnterpriseName()}"></td>
-        <td th:text="${farm.getAnnualIncome()}"></td>
-        <td th:text="${farm.getLandArea()}"></td>
-        <td> <a style="color: darkgoldenrod" th:href="'/edit/' + ${farm.id}">Редагувати</a></td>
-        <td> <a style="color: red" th:href="'/delete/' + ${farm.id}">Видалити</a></td>
+    <tr th:each="employee : ${employeeList}">
+        <td th:text="${employee.getName()}"></td>
+        <td th:text="${employee.getEntryTime()}"></td>
+        <td th:text="${employee.getExitTime()}"></td>
+        <td th:text="${employee.getRoomNumber()}"></td>
+        <td> <a style="color: darkgoldenrod" th:href="'/edit/' + ${employee.id}">Редагувати</a></td>
+        <td> <a style="color: red" th:href="'/delete/' + ${employee.id}">Видалити</a></td>
     </tr>
 </table>
 <br/>
-<a style="color: green" href='/add'>Створити підприємство</a>
+<a style="color: green" href='/add'>Створити працівника</a>
 <a style="color: blue" href='/download/pdf'>Скачати PDF</a>
 
 </body>

@@ -2,30 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редагувати підприємство</title>
+    <title>Редагувати працівника</title>
 </head>
 <body>
-<h1>Редагувати підприємство</h1>
+<h1>Редагувати працівника</h1>
 <div th:if="${errorMessage}" style="color: red">
     <p th:text="${errorMessage}"></p>
 </div>
 <form action="#" method="post">
-    <input type="hidden" th:field="${farm.id}">
+    <input type="hidden" th:field="${employee.id}">
     <div>
-        <label for="cadastreNumber">Кадастровий номер:</label>
-        <input type="text" id="cadastreNumber" name="cadastreNumber" th:field="${farm.cadastreNumber}" required>
+        <label for="name">Кадастровий номер:</label>
+        <input type="text" id="name" name="name" th:field="${employee.name}" required>
     </div>
     <div>
-        <label for="enterpriseName">Назва підприємства:</label>
-        <input type="text" id="enterpriseName" name="enterpriseName" th:field="${farm.enterpriseName}" required>
+        <label for="entryTime">Час входження</label>
+        <input type="text" id="entryTime" name="entryTime" th:field="${employee.entryTime}" required>
     </div>
     <div>
-        <label for="annualIncome">Річний дохід:</label>
-        <input type="number" id="annualIncome" name="annualIncome" th:field="${farm.annualIncome}" required min="0">
+        <label for="exitTime">Час виходу:</label>
+        <input type="text" id="exitTime" name="exitTime" th:field="${employee.exitTime}" required min="0">
     </div>
     <div>
-        <label for="landArea">Площа землі:</label>
-        <input type="number" id="landArea" name="landArea" th:field="${farm.landArea}" required min="0">
+        <label for="roomNumber">Номер приміщення:</label>
+        <input type="number" id="roomNumber" name="roomNumber" th:field="${employee.roomNumber}" required min="0">
     </div>
     <button type="submit">Зберегти</button>
 </form>
